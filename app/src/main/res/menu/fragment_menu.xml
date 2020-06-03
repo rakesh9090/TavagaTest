@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:orderInCategory="100"
+        android:title="Show Fav"
+        android:id="@+id/set_fav"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        app:showAsAction="ifRoom|collapseActionView"/>
+
+    <item
+        android:orderInCategory="200"
+        android:title="Show Fav"
+        android:icon="@drawable/ic_baseline_info_24"
+        android:id="@+id/show_info"
+        app:showAsAction="ifRoom|collapseActionView"/>
+
+    <item
+        android:orderInCategory="300"
+        android:title="Show Fav"
+        android:id="@+id/download"
+        android:icon="@drawable/ic_baseline_arrow_downward_24"
+        app:showAsAction="ifRoom|collapseActionView"/>
+</menu>
