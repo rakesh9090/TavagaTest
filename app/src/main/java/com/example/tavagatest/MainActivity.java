@@ -2,6 +2,7 @@ package com.example.tavagatest;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.view.View;
 import com.example.tavagatest.adapter.ImageRecAdapter;
 import com.example.tavagatest.api.RetrofitClient;
 import com.example.tavagatest.fragment.FavFragment;
+import com.example.tavagatest.fragment.MainFragment;
 import com.example.tavagatest.pojo.Photo;
 
 import java.util.List;
@@ -26,7 +28,6 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView rec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,39 +38,15 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle("Tavaga");
 
-        rec =  findViewById(R.id.rec_view);
-
-        getPhotos();
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame,
+                    new MainFragment()).commit();
+        }
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
-    private void getPhotos() {
-        Call<List<Photo>> call = RetrofitClient.getInstance().getApi().getPhoto();
-
-        call.enqueue(new Callback<List<Photo>>() {
-            @Override
-            public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
-                if (response.body() != null){
-                    int numberOfColumns = 2;
-                    rec.setLayoutManager(new GridLayoutManager(MainActivity.this, numberOfColumns));
-                    ImageRecAdapter imageRecAdapter = new ImageRecAdapter(getApplicationContext(), response.body());
-                    rec.setAdapter(imageRecAdapter);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Photo>> call, Throwable t) {
-
-            }
-        });
-    }
-
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
@@ -82,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.show_fav) {
+            //((ConstraintLayout)findViewById(R.id.rootView)).removeAllViews();
             Fragment showFav = new FavFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame,
                     showFav).addToBackStack(null).commit();
@@ -89,5 +67,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

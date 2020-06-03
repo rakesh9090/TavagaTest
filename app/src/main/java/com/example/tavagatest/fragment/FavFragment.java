@@ -34,6 +34,7 @@ public class FavFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fav, container, false);
         setHasOptionsMenu(true);
+        getActivity().setTitle("Favorite Images");
         listView = view.findViewById(R.id.fav_list);
         getFavList();
         return view;

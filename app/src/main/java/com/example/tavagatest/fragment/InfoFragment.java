@@ -1,6 +1,7 @@
 package com.example.tavagatest.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,11 +17,10 @@ import com.example.tavagatest.R;
 import com.example.tavagatest.pojo.Photo;
 
 public class InfoFragment extends Fragment {
-    private View view;
-    private Photo photo;
+    private static Photo photo;
 
     public InfoFragment(Photo photo) {
-        this.photo = photo;
+        InfoFragment.photo = photo;
     }
 
     public InfoFragment() {
@@ -34,13 +34,14 @@ public class InfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_view_image, container, false);
+        View view = inflater.inflate(R.layout.fragment_info, container, false);
         setHasOptionsMenu(true);
+        getActivity().setTitle("Image Info");
 
-        TextView title =  view.findViewById(R.id.image_title);
+        TextView title =  view.findViewById(R.id.txt_title);
         TextView imageText = view.findViewById(R.id.image_txt);
 
-        title.setText(photo.getId());
+        title.setText(photo.getTitle());
         imageText.setText(photo.getTitle());
 
         return view;

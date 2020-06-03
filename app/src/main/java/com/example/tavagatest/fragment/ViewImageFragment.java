@@ -1,6 +1,7 @@
 package com.example.tavagatest.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,10 +11,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.tavagatest.R;
@@ -23,10 +26,10 @@ import com.example.tavagatest.pojo.Photo;
 
 public class ViewImageFragment extends Fragment {
 
-    private Photo photo;
+    private static Photo photo;
 
     public ViewImageFragment(Photo photo) {
-        this.photo = photo;
+        ViewImageFragment.photo = photo;
     }
 
     public ViewImageFragment() {
@@ -42,6 +45,7 @@ public class ViewImageFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_image, container, false);
         setHasOptionsMenu(true);
+        getActivity().setTitle("Image");
 
         TextView txt = view.findViewById(R.id.image_view_txt);
         txt.setText(photo.getTitle());
@@ -80,6 +84,25 @@ public class ViewImageFragment extends Fragment {
     }
 
     private void downloadImage() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setCancelable(false);
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService (Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.download_dialog, null);
+        final Button okButton = dialogView.findViewById(R.id.btn_ok);
+
+        builder.setView(dialogView).create();
+        final AlertDialog ad = builder.show();
+
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame,
+                        new MainFragment()).commit();
+                ad.dismiss();
+            }
+        });
+
+
     }
 
     private void setImageAsFav() {
@@ -111,4 +134,6 @@ public class ViewImageFragment extends Fragment {
         SaveTask st = new SaveTask();
         st.execute();
     }
+
+
 }
